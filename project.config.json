@@ -14,17 +14,24 @@
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
-        }
+        },
+        "condition": false,
+        "packNpmRelationList": []
     },
     "compileType": "miniprogram",
     "libVersion": "3.7.2",
-    "appid": "wxa03c4b58d5afde1f",
+    "appid": "wx402a6f3c08538485",
     "projectname": "ColorUI2.0-demo",
     "simulatorType": "wechat",
     "simulatorPluginLibVersion": {},
     "condition": {
         "miniprogram": {
             "list": [
+                {
+                    "name": "1.1 基础-Cos资源",
+                    "pathName": "pages/basics/source/manage",
+                    "query": ""
+                },
                 {
                     "name": "-----基础-首页-----",
                     "pathName": "pages/basics/home/home",

@@ -1,9 +1,0 @@
-<!--pages/basics/source_manage/source.wxml-->
-<text>pages/basics/source_manage/source.wxml</text>
-<view class="cu-card margin-t">
-  <view class="cu-list menu">
-    <view class="cu-item arrow" bindtap="goToCosPage">
-      <text>COS资源</text>
-    </view>
-  </view>
-</view>
