@@ -13,3 +13,13 @@
   </view>
   <!-- <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/> -->
 </view>
+
+<view>
+  <button bind:tap="onCosButton">
+    点击上传
+  </button>
+  <view>
+    {{test}}
+  </view>
+  <!-- <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/> -->
+</view>

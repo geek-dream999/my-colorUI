@@ -1,4 +1,5 @@
 // pages/basics/source_manage/source_manage.js
+import request from "../../../utif/request";
 Page({
 
     /**
@@ -20,6 +21,24 @@ Page({
      */
     onReady() {
 
+    },
+
+    onCosButton() {
+        console.log("onCosButton")
+        let data = {
+            name: '你好',
+            email: "397608301@qq.com"
+        }
+        request('/test', 'post', data).then((res) => {
+            this.setData({
+                testRes: res.message
+            })
+            let da = this.data
+            console.log(da.testRes)
+            this.setData({
+                test: da.testRes
+            })
+        })
     },
     onButton() {
         console.log(111)
