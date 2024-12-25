@@ -2,14 +2,14 @@
 <text>pages/basics/source_manage/source.wxml</text>
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
   <view slot="backText">返回</view>
-  <view slot="content">布局</view>
+  <view slot="content">cos管理</view>
 </cu-custom>
 <view>
-  <button bindtap="onButton">
+  <button bind:tap="onButton">
     点击
   </button>
   <view>
     {{test}}
   </view>
-  <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/>
+  <!-- <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/> -->
 </view>

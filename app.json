@@ -10,6 +10,7 @@
     "pages/basics/progress/progress",
     "pages/basics/shadow/shadow",
     "pages/basics/source_manage/source_manage",
+    "pages/basics/myself/myself",
     "pages/basics/background/background",
     "pages/basics/text/text",
     "pages/basics/icon/icon",

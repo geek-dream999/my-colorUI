@@ -22,6 +22,7 @@ Page({
 
     },
     onButton() {
+        console.log(111)
         let data = {
             name: 'Name',
             email: '2438524706@qq.com'
@@ -30,7 +31,8 @@ Page({
             'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJPcGVuSWQiOiJvbW5tTzdTWlAyNEd2c3IwT2o5R3lNUFNKRkNBIiwiSUQiOjI2LCJVc2VyTmFtZSI6IjE4OTM5MzkxNTgwIiwiTmlja05hbWUiOiLlsIEiLCJTdGF0dXMiOjEsIkJ1ZmZlclRpbWUiOjg2NDAwLCJpc3MiOiJxbVBsdXMiLCJhdWQiOlsiR1ZBIl0sImV4cCI6MTczNTU0NDMzNCwibmJmIjoxNzM0OTM5NTM0fQ.m2WffMmolNOvJh79DscZZ37p6MkgaREd7TIxQ7EQfq4'
         }
         wx.request({
-            url: 'http://127.0.0.1:8844/test', //接口地址：测试环境
+            // url: 'http://192.168.0.41:8844/test', //接口地址：测试环境
+            url: 'https://zang.yahuihui.cn/test', //接口地址：测试环境
             method: 'post', //请求方法
             data: data, //传递参数+
             header: header, //自定义头部，和后端商同后编写

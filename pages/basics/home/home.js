@@ -5,6 +5,12 @@ Component({
   data: {
     elements: [
         {
+            title: '我自己',
+            name: 'myself',
+            color: 'cyan',
+            icon: 'newsfill'
+          },
+        {
             title: 'cos资源',
             name: 'source_manage',
             color: 'cyan',
