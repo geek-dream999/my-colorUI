@@ -27,6 +27,11 @@
     </view>
 
 
+    <!-- 左下角上传文件按钮 -->
+    <!-- <button class="btn-upload" bindtap="onUpload">
+        <text class="iconfont">上传</text>
+    </button> -->
+
     <!-- 右下角添加相册按钮 -->
     <button class="btn-add" bindtap="openModal">+</button>
 

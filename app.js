@@ -3,7 +3,8 @@
 
 App({
 //   BaseUrl: 'http://localhost:8844',
-  BaseUrl: 'https://zang.yahuihui.cn',
+  BaseUrl: 'http://192.168.0.41:8844',
+//   BaseUrl: 'https://zang.yahuihui.cn',
   onLaunch: function() {
     if (wx.cloud) {
       wx.cloud.init({
