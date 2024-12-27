@@ -5,7 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        myBlob:"https://yahuihui.cn"
     },
 
     /**
@@ -62,5 +62,13 @@ Page({
      */
     onShareAppMessage() {
 
-    }
+    },
+    onImageTap(e) {
+        console.log(e)
+        const  webviewUrlBefore = e.currentTarget.dataset.webviewurlbefore;
+        // 跳转到 web-view 页面
+        wx.navigateTo({
+          url: `/pages/basics/webview/webview?webviewUrlBefore=${webviewUrlBefore}` 
+        });
+      }
 })

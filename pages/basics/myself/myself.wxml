@@ -1,16 +1,25 @@
 <!--pages/basics/myself/myself.wxml-->
 <text>pages/basics/myself/myself.wxml</text>
 <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">我自己</view>
+    <view slot="backText">返回</view>
+    <view slot="content">我自己</view>
 </cu-custom>
 
 <view>
-  <button bindtap="onButton">
-    点击
-  </button>
-  <view>
-    {{test}}
-  </view>
-  <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/>
+    <button bindtap="onImageTap"  data-webviewUrlBefore="https://yahuihui.cn/s/about">
+        点击访问我的个人博客【我的页面】
+    </button>
+    <button bindtap="onImageTap"  data-webviewUrlBefore="https://yahuihui.cn/admin/index.html#/dashboard">
+        点击访问我的个人博客【后台管理】
+    </button>
+    <view>
+        {{test}}
+    </view>
+    <view class="my-image">
+        <image  src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode="" bindtap="onImageTap"  data-webviewUrlBefore="https://yahuihui.cn"/>
+    </view>
+
+    <text class="cuIcon-search lg text-gray"></text>
+
 </view>
+

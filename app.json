@@ -10,7 +10,9 @@
     "pages/basics/progress/progress",
     "pages/basics/shadow/shadow",
     "pages/basics/source_manage/source_manage",
+    "pages/basics/source_manage_album/album",
     "pages/basics/myself/myself",
+    "pages/basics/webview/webview",
     "pages/basics/background/background",
     "pages/basics/text/text",
     "pages/basics/icon/icon",
@@ -46,7 +48,8 @@
     "navigationBarTextStyle": "white"
   },
   "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom"
+    "cu-custom": "/colorui/components/cu-custom",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index"
   },
   "sitemapLocation": "sitemap21.json"
 }

@@ -1,25 +1,44 @@
-<!--pages/basics/source_manage/source.wxml-->
-<text>pages/basics/source_manage/source.wxml</text>
-<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
-  <view slot="backText">返回</view>
-  <view slot="content">cos管理</view>
-</cu-custom>
-<view>
-  <button bind:tap="onButton">
-    点击
-  </button>
-  <view>
-    {{test}}
-  </view>
-  <!-- <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/> -->
-</view>
+<view class="container">
+    <!-- 顶部导航 -->
+    <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+        <view slot="backText">返回</view>
+        <view slot="content">资源管理</view>
+    </cu-custom>
 
-<view>
-  <button bind:tap="onCosButton">
-    点击上传
-  </button>
-  <view>
-    {{test}}
-  </view>
-  <!-- <image src="https://image.wanniangqianxian.com/zjian/min_app/2024-09-30/nRlgEix4y52d48c48640388928ee9cc463e858a5aec3.png" mode=""/> -->
+    <!-- 相册列表 -->
+    <view class="album-list">
+        <block wx:for="{{albums}}" wx:key="id">
+            <view class="album-item" bindtap="goToAlbum" data-id="{{item.id}}" data-name="{{item.name}}">
+                <image class="album-cover" src="{{(item.coverPhotoUrl && item.coverPhotoUrl.length > 0) ? item.coverPhotoUrl : 'https://image.yahuihui.cn/picgo-new/20241212165145704.png'}}" mode="aspectFill"></image>
+                <text class="album-name">{{item.name}}</text>
+            </view>
+        </block>
+        <!-- 如果没有相册 -->
+        <view wx:if="{{albums.length === 0}}" class="empty-placeholder">
+            暂无相册，点击右下角添加按钮创建相册
+        </view>
+    </view>
+
+
+    <!-- 分页加载状态 -->
+    <view wx:if="{{albums.length > 0}}" class="loading-status">
+        <view wx:if="{{hasMore}}" class="loading-text">加载中...</view>
+        <view wx:else class="no-more-text">没有更多数据了</view>
+    </view>
+
+
+    <!-- 右下角添加相册按钮 -->
+    <button class="btn-add" bindtap="openModal">+</button>
+
+    <!-- 新建相册弹窗 -->
+    <view wx:if="{{isModalOpen}}" class="modal">
+        <view class="modal-content">
+            <text style="font-size: 30rpx; font-weight: bold; color: #333;">创建新相册</text>
+            <input class="modal-input" placeholder="请输入相册名称" bindinput="handleInput" />
+            <view class="modal-actions">
+                <button class="btn-cancel" bindtap="closeModal">取消</button>
+                <button class="btn-confirm" bindtap="createAlbum">确认</button>
+            </view>
+        </view>
+    </view>
 </view>

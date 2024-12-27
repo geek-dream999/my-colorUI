@@ -1,0 +1,63 @@
+<view class="container">
+    <!-- 顶部导航 -->
+    <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+        <view slot="backText">返回</view>
+        <view slot="content">{{folderName}}</view>
+    </cu-custom>
+
+    <view class="search-upload-bar">
+        <view class="search-box">
+            <input type="text" class="search-input" placeholder="请输入文件名" bindinput="onSearchInput" />
+            <view class="search-icon cuIcon-search lg text-gray" bindtap="onSearch"></view>
+        </view>
+    </view>
+
+    <view wx:if="{{items.length === 0}}" class="empty-placeholder">
+        暂无图片，点击左下角添加按钮创建图片
+    </view>
+    <block wx:for="{{items}}" wx:key="id">
+        <van-swipe-cell class="van-swipe-cell" right-width="{{ 65 }}">
+            <van-cell-group>
+                <view class="file-item" data-id="{{item.id}}" data-url="{{item.photoUrl}}" bindlongpress="copyUrl" bindtap="viewDetail">
+                    <image class="file-image" src="{{item.photoUrl}}" mode="aspectFill"></image>
+                    <text class="file-name" wx:if="{{item.name}}">{{item.name}}</text>
+                </view>
+            </van-cell-group>
+            <view slot="right" class="van-swipe-cell__right" bindtap="deleteItem" data-id="{{item.id}}">删除</view>
+        </van-swipe-cell>
+    </block>
+
+    <!-- 分页加载状态 -->
+    <view wx:if="{{items.length > 0}}" class="loading-status">
+        <view wx:if="{{hasMore}}" class="loading-text">加载中...</view>
+        <view wx:else class="no-more-text">没有更多数据了</view>
+    </view>
+
+    <!-- 查看详情大图 -->
+    <view wx:if="{{selectedItem}}" class="modal" catchtap="closeDetail">
+        <image class="detail-image" src="{{selectedItem.photoUrl}}" mode="widthFix"></image>
+        <!-- 右下角感叹号按钮 -->
+        <view class="info-button" catchtap="toggleInfo">!</view>
+    </view>
+
+    <!-- 照片信息蒙版 -->
+    <view wx:if="{{showInfo}}" class="info-mask" bindtap="closeInfo">
+        <view class="info-content" catchtap="preventClose">
+            <view class="info-item">
+                <text bindtap="startEditing">名称：</text>
+                <view wx:if="{{!isEditing}}">
+                    <text>{{selectedItem.name}}</text>
+                </view>
+                <input wx:if="{{isEditing}}" class="edit-input" value="{{selectedItem.name}}" focus="{{true}}" bindinput="updateNameInput" bindblur="saveName"  bindfocus="focusNameInput"  />
+            </view>
+            <view class="info-item">
+                <text>URL：</text>
+                <text>{{selectedItem.photoUrl}}</text>
+            </view>
+            <button class="close-btn" bindtap="closeInfo">关闭</button>
+        </view>
+    </view>
+
+    <!-- 左下角上传文件按钮 -->
+    <button class="btn-upload" bindtap="onUpload">+</button>
+</view>

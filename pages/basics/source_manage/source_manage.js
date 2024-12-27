@@ -1,111 +1,118 @@
 // pages/basics/source_manage/source_manage.js
 import request from "../../../utif/request";
+
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
-        test: ''
+        albums: [], // 存储相册列表
+        isModalOpen: false, // 控制弹窗显示
+        newAlbumName: "", // 新相册名称
     },
 
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad(options) {
-
+    onLoad() {
+        this.setData({
+            page: 1,
+            pageSize: 10,
+            albums: [],
+            hasMore: true
+        });
+        this.getAlbums(); // 加载相册列表
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady() {
+    // 获取相册列表方法
+    getAlbums() {
+        if (!this.data.hasMore) {
+            console.log("没有更多数据");
+            return;
+        }
 
-    },
-
-    onCosButton() {
-        console.log("onCosButton")
         let data = {
-            name: '你好',
-            email: "397608301@qq.com"
-        }
-        request('/test', 'post', data).then((res) => {
-            this.setData({
-                testRes: res.message
-            })
-            let da = this.data
-            console.log(da.testRes)
-            this.setData({
-                test: da.testRes
-            })
-        })
-    },
-    onButton() {
-        console.log(111)
-        let data = {
-            name: 'Name',
-            email: '2438524706@qq.com'
-        }
-        let header = {
-            'x-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJPcGVuSWQiOiJvbW5tTzdTWlAyNEd2c3IwT2o5R3lNUFNKRkNBIiwiSUQiOjI2LCJVc2VyTmFtZSI6IjE4OTM5MzkxNTgwIiwiTmlja05hbWUiOiLlsIEiLCJTdGF0dXMiOjEsIkJ1ZmZlclRpbWUiOjg2NDAwLCJpc3MiOiJxbVBsdXMiLCJhdWQiOlsiR1ZBIl0sImV4cCI6MTczNTU0NDMzNCwibmJmIjoxNzM0OTM5NTM0fQ.m2WffMmolNOvJh79DscZZ37p6MkgaREd7TIxQ7EQfq4'
-        }
-        wx.request({
-            // url: 'http://192.168.0.41:8844/test', //接口地址：测试环境
-            url: 'https://zang.yahuihui.cn/test', //接口地址：测试环境
-            method: 'post', //请求方法
-            data: data, //传递参数+
-            header: header, //自定义头部，和后端商同后编写
-            success: (res) => {
-                console.log('request.js文件的通用接口请求封装返回的结果数据', res.data.message);
+            page: this.data.page,
+            pageSize: this.data.pageSize,
+            name: '',
+            memberId: '',
+            isForwardEnabled: ''
+        };
+
+        request('/source/album', 'get', data).then((res) => {
+            if (res.code === 0) {
+                const newAlbums = res.data.list || [];
+                const total = res.data.total || 0;
+
                 this.setData({
-                    test: res.data.message
-                })
-            },
-        })
-    },
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow() {
-
-    },
-    goToCosPage() {
-        wx.navigateTo({
-            url: '/pages/cos/cos' // 跳转到 COS 资源页面
+                    albums: [...this.data.albums, ...newAlbums], // 合并已有数据与新数据
+                    page: this.data.page + 1, // 页码累加
+                    hasMore: this.data.albums.length + newAlbums.length < total // 判断是否加载完所有数据
+                });
+            } else {
+                console.log("获取相册失败：", res.msg);
+            }
+        }).catch(err => {
+            console.log("请求失败：", err);
         });
     },
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide() {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload() {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh() {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
+    // 下拉触底事件
     onReachBottom() {
-
+        console.log("触底加载更多");
+        this.getAlbums();
     },
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage() {
+    // 打开新建相册弹窗
+    openModal() {
+        this.setData({
+            isModalOpen: true
+        });
+    },
 
-    }
-})
+    // 关闭弹窗
+    closeModal() {
+        this.setData({
+            isModalOpen: false,
+            newAlbumName: ""
+        });
+    },
+
+    // 输入相册名称
+    handleInput(e) {
+        this.setData({
+            newAlbumName: e.detail.value
+        });
+    },
+
+    // 创建相册
+    createAlbum() {
+        const name = this.data.newAlbumName.trim();
+        let data = {
+            name: name,
+            email: "397608301@qq.com" + name
+        }
+
+        if (!name) {
+            wx.showToast({
+                title: '请输入相册名称',
+                icon: 'none'
+            });
+            return;
+        }
+        request('/source/albumAdd', 'post', {
+            name: name,
+            email: "397608301@qq.com" + name
+        }).then((res) => {
+            if (res.code === 0) {
+                wx.showToast({
+                    title: '相册创建成功',
+                    icon: 'success'
+                });
+                this.closeModal();
+                this.getAlbums(); // 重新加载相册列表
+            }
+        });
+    },
+
+    // 进入相册
+    goToAlbum(e) {
+        const { id, name } = e.currentTarget.dataset;
+        wx.navigateTo({
+            url: `/pages/basics/source_manage_album/album?id=${id}&name=${name}` // 跳转到相册详情页
+        });
+    },
+});

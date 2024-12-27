@@ -1,0 +1,9 @@
+<view class="container">
+    <!-- 顶部导航 -->
+    <!-- <cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+        <view slot="backText">返回</view>
+        <view slot="content">{{folderName}}</view>
+    </cu-custom> -->
+
+    <web-view src="{{webviewUrl}}"></web-view>
+</view>

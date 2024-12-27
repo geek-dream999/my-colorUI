@@ -1,0 +1,13 @@
+  /* 容器布局 */
+  .container {
+    background-color: #f9f9f9;
+    padding: 0;
+    /* 去掉顶部和左边多余空隙 */
+    margin: 0 auto;
+}
+
+cu-custom {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
