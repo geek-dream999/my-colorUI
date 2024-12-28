@@ -36,10 +36,12 @@ Page({
 
     // 获取相册列表方法
     getAlbums() {
+        console.log("列表已进入")
         if (!this.data.hasMore) {
             console.log("没有更多数据");
             return;
         }
+        console.log("列表开始执行")
 
         let data = {
             page: this.data.page,
@@ -53,10 +55,9 @@ Page({
             if (res.code === 0) {
                 const newAlbums = res.data.list || [];
                 const total = res.data.total || 0;
-
                 this.setData({
-                    albums: [...this.data.albums, ...newAlbums], // 合并已有数据与新数据
-                    page: this.data.page + 1, // 页码累加
+                    albums: res.data.list , // 合并已有数据与新数据
+                    pageSize: this.data.pageSize + 10, // 页码累加
                     hasMore: this.data.albums.length + newAlbums.length < total // 判断是否加载完所有数据
                 });
             } else {
@@ -119,6 +120,9 @@ Page({
                     icon: 'success'
                 });
                 this.closeModal();
+                this.setData({
+                    hasMore:true
+                });
                 this.getAlbums(); // 重新加载相册列表
             }
         });
