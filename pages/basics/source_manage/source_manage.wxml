@@ -6,9 +6,9 @@
     </cu-custom>
 
     <!-- 相册列表 -->
-    <view class="album-list">
+    <view class="album-list" wx:if="{{!isEditMode}}">
         <block wx:for="{{albums}}" wx:key="id">
-            <view class="album-item" bindtap="goToAlbum" data-id="{{item.id}}" data-name="{{item.name}}">
+            <view class="album-item" bindtap="goToAlbum" data-id="{{item.id}}" data-name="{{item.name}}" bindlongpress="startEditMode">
                 <image class="album-cover" src="{{(item.coverPhotoUrl && item.coverPhotoUrl.length > 0) ? item.coverPhotoUrl : 'https://image.yahuihui.cn/picgo-new/20241212165145704.png'}}" mode="aspectFill"></image>
                 <text class="album-name">{{item.name}}</text>
             </view>
@@ -20,20 +20,36 @@
     </view>
 
 
+    <!-- 编辑模式 -->
+    <view class="album-list" wx:if="{{isEditMode}}">
+        <block wx:for="{{albums}}" wx:key="id">
+            <view class="album-item-edit">
+                <view class="overlay">
+                    <button class="delete-btn" bindtap="deleteAlbum" data-id="{{item.id}}">X</button>
+                </view>
+                <image class="album-cover" src="{{(item.coverPhotoUrl && item.coverPhotoUrl.length > 0) ? item.coverPhotoUrl : 'https://image.yahuihui.cn/picgo-new/20241212165145704.png'}}" mode="aspectFill"></image>
+                <view class="btn-exit-input">
+                    <input class="edit-name" value="{{item.name}}" bindinput="updateAlbumName" data-id="{{item.id}}" />
+                </view>
+
+            </view>
+        </block>
+    </view>
+
+
     <!-- 分页加载状态 -->
     <view wx:if="{{albums.length > 0}}" class="loading-status">
         <view wx:if="{{hasMore}}" class="loading-text">加载中...</view>
         <view wx:else class="no-more-text">没有更多数据了</view>
     </view>
 
-
-    <!-- 左下角上传文件按钮 -->
-    <!-- <button class="btn-upload" bindtap="onUpload">
-        <text class="iconfont">上传</text>
-    </button> -->
-
     <!-- 右下角添加相册按钮 -->
-    <button class="btn-add" bindtap="openModal">+</button>
+    <button class="btn-add" bindtap="openModal"  wx:if="{{!isEditMode}}" >+</button>
+
+    <!-- 编辑模式下完成按钮 -->
+    <view class="btn-exit">
+        <button class="btn-done" bindtap="exitEditMode" wx:if="{{isEditMode}}">完成</button>
+    </view>
 
     <!-- 新建相册弹窗 -->
     <view wx:if="{{isModalOpen}}" class="modal">

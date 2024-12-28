@@ -6,6 +6,7 @@ Page({
         albums: [], // 存储相册列表
         isModalOpen: false, // 控制弹窗显示
         newAlbumName: "", // 新相册名称
+        isEditMode: false, // 编辑模式状态
     },
 
     onLoad() {
@@ -110,9 +111,67 @@ Page({
 
     // 进入相册
     goToAlbum(e) {
-        const { id, name } = e.currentTarget.dataset;
+        if (this.data.isEditMode) return; // 编辑模式下无法进入相册
+        const {
+            id,
+            name
+        } = e.currentTarget.dataset;
         wx.navigateTo({
             url: `/pages/basics/source_manage_album/album?id=${id}&name=${name}` // 跳转到相册详情页
         });
     },
+    // 启动编辑模式
+    startEditMode() {
+        this.setData({
+            isEditMode: true
+        });
+    },
+    // 退出编辑模式
+    exitEditMode() {
+        this.setData({
+            isEditMode: false
+        });
+    },
+    // 更新相册名称
+    updateAlbumName(e) {
+        const {
+            id
+        } = e.currentTarget.dataset;
+        const name = e.detail.value.trim();
+        const index = this.data.albums.findIndex(album => album.id === id);
+        if (index !== -1) {
+            const key = `albums[${index}].name`;
+            this.setData({
+                [key]: name
+            });
+        }
+    },
+
+    // 删除相册
+    deleteAlbum(e) {
+        const {
+            id
+        } = e.currentTarget.dataset;
+        wx.showModal({
+            title: '确认删除',
+            content: '删除后无法恢复，确定要删除吗？',
+            success: (result) => {
+                if (result.confirm) {
+                    request('/source/albumDelete', 'post', {
+                        id
+                    }).then((res) => {
+                        if (res.code === 0) {
+                            wx.showToast({
+                                title: '删除成功',
+                                icon: 'success'
+                            });
+                            this.setData({
+                                albums: this.data.albums.filter(album => album.id !== id)
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    }
 });
