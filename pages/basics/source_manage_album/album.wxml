@@ -48,7 +48,7 @@
                 <view wx:if="{{!isEditing}}">
                     <text>{{selectedItem.name}}</text>
                 </view>
-                <input wx:if="{{isEditing}}" class="edit-input" value="{{selectedItem.name}}" focus="{{true}}" bindinput="updateNameInput" bindblur="saveName"  bindfocus="focusNameInput"  />
+                <input wx:if="{{isEditing}}" class="edit-input" value="{{selectedItem.name}}" focus="{{true}}" bindinput="updateNameInput" bindblur="saveName" bindfocus="focusNameInput" />
             </view>
             <view class="info-item">
                 <text>URL：</text>

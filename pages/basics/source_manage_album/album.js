@@ -180,7 +180,7 @@ Page({
     onUpload() {
         wx.chooseMedia({
             count: 9, // 最多选择 9 个文件
-            mediaType: ['image', 'file'], // 支持图片和文件类型
+            mediaType: ['image', 'file','video'], // 支持图片和文件类型
             sourceType: ['album'], // 从相册中选择
             success: (res) => {
                 this.uploadFiles(res.tempFiles); // 调用上传函数
@@ -203,10 +203,11 @@ Page({
                     formData: {
                         folderId: this.data.folderId, // 附带参数
                     },
-                    header: {
-                        Authorization: `Bearer ${wx.getStorageSync('token')}`, // 鉴权头部
-                    },
+                    // header: {
+                    //     Authorization: `Bearer ${wx.getStorageSync('token')}`, // 鉴权头部
+                    // },
                     success: (res) => {
+                        console.log(res)
                         const data = JSON.parse(res.data); // 解析返回的 JSON 数据
                         if (data.code === 0) {
                             resolve(data.data.file.url); // 只需要文件地址
@@ -343,7 +344,7 @@ Page({
         request('/source/folder/update', 'post', {
             id,
             name
-        }).then(() => {
+        }).then((res) => {
             const items = this.data.items.map((item) =>
                 item.id === id ? {
                     ...item,
@@ -354,10 +355,16 @@ Page({
                 items,
                 isEditing: false
             });
+            if (res.code === 0) {
+                wx.showToast({
+                    title: '保存成功',
+                    icon: 'success'
+                });
+            }
         });
     },
-      // 点击名称输入框时选中所有文字
-      focusNameInput(e) {
+    // 点击名称输入框时选中所有文字
+    focusNameInput(e) {
         const input = e.detail.value;
         this.setData({
             selectionStart: 0,
