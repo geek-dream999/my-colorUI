@@ -4,6 +4,7 @@ const app = getApp();
 
 Page({
     data: {
+        showTipModal: true, // 控制温馨提示模态框显示
         folderId: 0, // 当前文件夹 ID
         folderName: "", // 当前文件夹 名称
         items: [], // 文件列表
@@ -47,7 +48,22 @@ Page({
             folderName: name, // 设置文件夹名称
             hasMore: true,
         });
+
+        // 进入页面后显示模态框 3 秒后隐藏
+        setTimeout(() => {
+            console.log("3秒后")
+            this.setData({
+                showTipModal: false
+            });
+        }, 3000);
         this.getItems(); // 获取文件夹内文件列表
+    },
+    // 关闭模态框的方法
+    closeHintModal() {
+        console.log("触发关闭模态框")
+        this.setData({
+            showTipModal: false
+        });
     },
     // 长按复制 URL
     copyUrl(e) {
@@ -180,7 +196,7 @@ Page({
     onUpload() {
         wx.chooseMedia({
             count: 9, // 最多选择 9 个文件
-            mediaType: ['image', 'file','video'], // 支持图片和文件类型
+            mediaType: ['image', 'file', 'video'], // 支持图片和文件类型
             sourceType: ['album'], // 从相册中选择
             success: (res) => {
                 this.uploadFiles(res.tempFiles); // 调用上传函数

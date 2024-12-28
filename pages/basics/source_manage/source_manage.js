@@ -3,6 +3,7 @@ import request from "../../../utif/request";
 
 Page({
     data: {
+        showTipModal: true, // 控制温馨提示模态框显示
         albums: [], // 存储相册列表
         isModalOpen: false, // 控制弹窗显示
         newAlbumName: "", // 新相册名称
@@ -16,7 +17,21 @@ Page({
             albums: [],
             hasMore: true
         });
+
+        // 进入页面后显示模态框 3 秒后隐藏
+        setTimeout(() => {
+            this.setData({
+                showTipModal: false
+            });
+        }, 3000);
         this.getAlbums(); // 加载相册列表
+    },
+    // 关闭模态框的方法
+    closeHintModal() {
+        console.log("触发关闭模态框")
+        this.setData({
+            showTipModal: false
+        });
     },
 
     // 获取相册列表方法
@@ -139,6 +154,7 @@ Page({
         } = e.currentTarget.dataset;
         const name = e.detail.value.trim();
         const index = this.data.albums.findIndex(album => album.id === id);
+
         if (index !== -1) {
             const key = `albums[${index}].name`;
             this.setData({
@@ -147,6 +163,49 @@ Page({
         }
     },
 
+    // 当用户点击其他地方，失去焦点时保存
+    saveAlbumName(e) {
+        const {
+            id
+        } = e.currentTarget.dataset;
+        const index = this.data.albums.findIndex(album => album.id === id);
+        if (index !== -1) {
+            const updatedAlbum = this.data.albums[index];
+
+            if (updatedAlbum.name.trim() === '') {
+                wx.showToast({
+                    title: '相册名称不能为空',
+                    icon: 'none'
+                });
+                return;
+            }
+
+            // 调用更新接口保存修改
+            request('/source/albumUpdate', 'post', {
+                id: id,
+                name: updatedAlbum.name.trim()
+            }).then(res => {
+                if (res.code === 0) {
+                    wx.showToast({
+                        title: '更新成功',
+                        icon: 'success'
+                    });
+                } else {
+                    wx.showToast({
+                        title: '更新失败',
+                        icon: 'none'
+                    });
+                    console.log('更新失败：', res.msg);
+                }
+            }).catch(err => {
+                wx.showToast({
+                    title: '请求失败',
+                    icon: 'none'
+                });
+                console.log('请求失败：', err);
+            });
+        }
+    },
     // 删除相册
     deleteAlbum(e) {
         const {

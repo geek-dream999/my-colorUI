@@ -13,7 +13,10 @@
     </view>
 
     <view wx:if="{{items.length === 0}}" class="empty-placeholder">
-        暂无图片，点击左下角添加按钮创建图片
+        <text>暂无图片，点击左下角添加按钮创建图片</text>
+        <text>1. 左滑删除，长按复制</text>
+        <text>2. 点击进入大图，右下角展示详情</text>
+        <text>3. 点击详情的名称可修改名称</text>
     </view>
     <block wx:for="{{items}}" wx:key="id">
         <van-swipe-cell class="van-swipe-cell" right-width="{{ 65 }}">
@@ -26,7 +29,18 @@
             <view slot="right" class="van-swipe-cell__right" bindtap="deleteItem" data-id="{{item.id}}">删除</view>
         </van-swipe-cell>
     </block>
-
+    <view class="modal-tip" wx:if="{{showTipModal}}" bindtap="closeHintModal">
+        <view class="modal-tip-content" catchtap>
+            <view class="modal-tip-header">
+                <text>温馨提示</text>
+            </view>
+            <view class="modal-tip-body">
+                <text>1. 左滑删除，长按复制</text>
+                <text>2. 点击进入大图，右下角展示详情</text>
+                <text>3. 点击详情的名称可修改名称</text>
+            </view>
+        </view>
+    </view>
     <!-- 分页加载状态 -->
     <view wx:if="{{items.length > 0}}" class="loading-status">
         <view wx:if="{{hasMore}}" class="loading-text">加载中...</view>

@@ -7,8 +7,8 @@ export const request = (url = '', method = 'GET', data = {}, header = {
     wx.request({
       // url: 'http://192.168.0.41:7788/zjian' + url, //接口地址：本地
       // url: 'https://client.zzazhijian.com/zjian' + url, //接口地址：正式环境
-    //   url: 'https://zang.yahuihui.cn' + url, //接口地址：测试环境
-    url: 'http://localhost:8844' + url, 
+      url: 'https://zang.yahuihui.cn' + url, //接口地址：测试环境
+    // url: 'http://localhost:8844' + url, 
     // url: 'http://192.168.0.41:8844' + url, 
       method: method, //请求方法
       data: data, //传递参数+

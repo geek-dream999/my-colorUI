@@ -17,6 +17,19 @@
         <view wx:if="{{albums.length === 0}}" class="empty-placeholder">
             暂无相册，点击右下角添加按钮创建相册
         </view>
+
+        <view class="modal-tip"wx:if="{{showTipModal}}"  bindtap="closeHintModal" >
+            <view class="modal-tip-content" catchtap>
+                <view class="modal-tip-header">
+                    <text>温馨提示</text>
+                </view>
+                <view class="modal-tip-body">
+                    <text>1. 右下角可添加文件夹</text>
+                    <text>2. 长按卡片进行编辑和删除操作</text>
+                </view>
+            </view>
+        </view>
+
     </view>
 
 
@@ -29,9 +42,8 @@
                 </view>
                 <image class="album-cover" src="{{(item.coverPhotoUrl && item.coverPhotoUrl.length > 0) ? item.coverPhotoUrl : 'https://image.yahuihui.cn/picgo-new/20241212165145704.png'}}" mode="aspectFill"></image>
                 <view class="btn-exit-input">
-                    <input class="edit-name" value="{{item.name}}" bindinput="updateAlbumName" data-id="{{item.id}}" />
+                    <input class="edit-name" value="{{item.name}}" bindinput="updateAlbumName" bindblur="saveAlbumName" data-id="{{item.id}}" />
                 </view>
-
             </view>
         </block>
     </view>
@@ -44,7 +56,7 @@
     </view>
 
     <!-- 右下角添加相册按钮 -->
-    <button class="btn-add" bindtap="openModal"  wx:if="{{!isEditMode}}" >+</button>
+    <button class="btn-add" bindtap="openModal" wx:if="{{!isEditMode}}">+</button>
 
     <!-- 编辑模式下完成按钮 -->
     <view class="btn-exit">
