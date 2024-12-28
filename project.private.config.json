@@ -3,7 +3,7 @@
     "projectname": "color-ui",
     "setting": {
         "compileHotReLoad": false,
-        "urlCheck": true,
+        "urlCheck": false,
         "bigPackageSizeSupport": false,
         "skylineRenderEnable": true
     }
